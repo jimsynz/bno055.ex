@@ -23,7 +23,7 @@ use Mix.Config
 
 config :bno055,
   bus: "i2c-1",
-  address: 0x28,
+  address: 0x40,
   config: [
     operation_mode: :nine_degrees_of_freedom,
     clock_select: :external,

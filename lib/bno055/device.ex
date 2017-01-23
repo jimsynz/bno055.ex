@@ -50,7 +50,7 @@ defmodule BNO055.Device do
   # GenServer callbacks
 
   def init([bus, address, config]) do
-    Logger.debug("Connecting to device #{bus}:0x#{address |> Integer.to_string(16)}")
+    Logger.debug("Connecting to device #{device_name bus, address}")
     {:ok, pid} = I2c.start_link(bus, address)
 
     case verify_chip_id(pid) do
@@ -180,7 +180,7 @@ defmodule BNO055.Device do
 
   defp apply_configuration(pid, config) do
     result = Enum.reduce(config, :ok, fn
-      _, {:error, msg} -> {:error, msg}
+      _, {:error, msg}  -> {:error, msg}
       {key, value}, :ok -> apply(Commands, key, [pid, value])
     end)
     case result do

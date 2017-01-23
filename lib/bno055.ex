@@ -15,6 +15,8 @@ defmodule BNO055 do
     address = Application.get_env(:bno055, :address)
     config  = Application.get_env(:bno055, :config, [])
     if (bus && address), do: connect(bus, address, config)
+
+    {:ok, sup}
   end
 
   def connect(bus, address, config \\ []) do
