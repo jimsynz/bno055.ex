@@ -119,7 +119,7 @@ defmodule BNO055.Device do
 
   defp process_name(bus, address), do: Module.concat(BNO055.Device, device_name(bus, address))
   defp device_name(%{bus: bus, address: address}), do: device_name(bus, address)
-  defp device_name(bus, address), do: "#{bus}:0x#{i2h address}"
+  defp device_name(bus, address), do: "#{bus}:#{i2h address}"
 
   defp verify_status(pid) do
     case Commands.system_status(pid) do
@@ -180,7 +180,7 @@ defmodule BNO055.Device do
 
   defp apply_configuration(pid, config) do
     result = Enum.reduce(config, :ok, fn
-      _, {:error, msg}  -> {:error, msg}
+      _, {:error, msg} -> {:error, msg}
       {key, value}, :ok -> apply(Commands, key, [pid, value])
     end)
     case result do
